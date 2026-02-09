@@ -1,61 +1,20 @@
-# QTM_OS Directory Organization TODO (v0.01)
-Status: PRE-WRITING / STRUCTURE + PLACEMENT
+# QTM_OS TODO (CURRENT)
+Status: ACTIVE — hygiene + next-step gating
 
 ────────────────────────────────────────
-A. BASELINE DIRECTORIES
+A. HYGIENE (NOW)
 ────────────────────────────────────────
-- [ ] Create kernel/
-- [ ] Create omni/
-- [ ] Create omni/examples/
-- [ ] Create planck/
-- [ ] Create contracts/
-- [ ] Create docs/ADR/
+- [ ] Decide policy for release/ artifacts: commit vs ignore; enforce in .gitignore and docs.
+- [ ] Reconcile freeze manifests: remove superseded copies OR document precedence (v0.01 vs v0.01a) without changing frozen content.
 
 ────────────────────────────────────────
-B. KERNEL / QTM OS (Truth + ARA)
+B. TEST READINESS (NEXT)
 ────────────────────────────────────────
-- [ ] Add kernel/PLAY_ECO_RUNTIME_v0.01.md
-- [ ] Add kernel/BLACK_BOX_CONSTITUTION_v0.01.md
-- [ ] Add kernel/QTM_WITNESS_MODEL_v0.01.md
-      - Defines ARA semantics and what counts as proof
-- [ ] (Optional) kernel/diagrams/BOUNDARIES_v0.01.(txt|svg)
+- [ ] Define one minimal OS test entrypoint (e.g., qtm probe) and its golden outputs.
+- [ ] Add a single end-to-end dry-run path: CLI → OMNI witness → PLANCK routing (no execution).
 
 ────────────────────────────────────────
-C. OMNI (Witness + ACIE)
+C. SURFACES (DEFERRED UNTIL TESTS PASS)
 ────────────────────────────────────────
-- [ ] Add omni/README.md
-      - Must state: OMNI implements ACIE
-- [ ] Add omni/OMNI_OPERATOR_CONTRACT_v0.01.md
-      - Human intent capture (ACIE)
-- [ ] Add omni/OMNI_INVARIANTS_v0.01.md
-      - ACIE hard boundaries
-- [ ] Add omni/OMNI_EXEC_WITNESS_HANDSHAKE_v0.01.md
-      - Intent → execution boundary
-- [ ] Add omni/WITNESS_FORMAT_v0.01.md
-- [ ] Add omni/CJSON_PROFILE_v0.01.md
-- [ ] Add omni/examples/surface.install.v0.01.json
-
-────────────────────────────────────────
-D. PLANCK (Execution Only)
-────────────────────────────────────────
-- [ ] Add planck/README.md
-- [ ] Add planck/REQUIREMENTS.md
-      - Derived strictly from witness contracts
-
-────────────────────────────────────────
-E. CONTRACTS (Authoritative Interfaces)
-────────────────────────────────────────
-- [ ] Add contracts/CLI_TO_WITNESS_MAPPING_v0.01.md
-- [ ] Add contracts/CONTRACTS.lock
-      - Hashes of authoritative contracts
-
-────────────────────────────────────────
-F. ARCHITECTURE DECISIONS
-────────────────────────────────────────
-- [ ] Add docs/ADR/ADR_0001_CLI_REPO_PLACEMENT.md
-
-────────────────────────────────────────
-G. CLI REPO (Vendoring, not authored here)
-────────────────────────────────────────
-- [ ] Vendor CLI_TO_WITNESS_MAPPING_v0.01.md into qtm-cli/contracts/
-- [ ] Maintain qtm-cli/contracts/CONTRACTS.lock
+- [ ] Planck Surface Manager text-only hub output (no UI).
+- [ ] SPLASH surface only after probe baseline is locked.
