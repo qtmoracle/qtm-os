@@ -9,3 +9,6 @@ echo "PASS: qtm --help matches golden"
 
 diff -u tests/golden/qtm_spec_v0.01.txt <(./bin/qtm --spec)
 echo "PASS: qtm --spec matches golden"
+
+diff -u tests/golden/qtm_inspect_v0.01.txt <(./bin/qtm inspect)
+echo "PASS: qtm inspect matches golden"
