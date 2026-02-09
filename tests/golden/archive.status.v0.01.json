@@ -1,0 +1,37 @@
+{
+  "spec_version": "v0.01",
+  "command": "archive.status",
+  "ok": true,
+  "result": {
+    "totals": {
+      "bytes": 7340032,
+      "objects": 128
+    },
+    "by_class": [
+      {
+        "class": "witness_results",
+        "bytes": 262144,
+        "objects": 32,
+        "ttl_days": null
+      },
+      {
+        "class": "claims_headers",
+        "bytes": 131072,
+        "objects": 32,
+        "ttl_days": null
+      },
+      {
+        "class": "claims_full",
+        "bytes": 3145728,
+        "objects": 40,
+        "ttl_days": 60
+      },
+      {
+        "class": "execution_logs",
+        "bytes": 1835008,
+        "objects": 24,
+        "ttl_days": 14
+      }
+    ]
+  }
+}

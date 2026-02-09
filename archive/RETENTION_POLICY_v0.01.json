@@ -1,0 +1,36 @@
+{
+  "policy_version": "v0.01",
+  "defaults": {
+    "max_local_bytes": 21474836480,
+    "max_daily_ingest_bytes": 1073741824,
+    "store_large_payloads": false
+  },
+  "classes": [
+    {
+      "class": "witness_results",
+      "ttl_days": null,
+      "pinned": true
+    },
+    {
+      "class": "claims_headers",
+      "ttl_days": null,
+      "pinned": true
+    },
+    {
+      "class": "claims_full",
+      "ttl_days": 60,
+      "pinned": false
+    },
+    {
+      "class": "execution_logs",
+      "ttl_days": 14,
+      "pinned": false
+    },
+    {
+      "class": "snapshots",
+      "ttl_days": 0,
+      "pinned": false,
+      "store_by_default": false
+    }
+  ]
+}

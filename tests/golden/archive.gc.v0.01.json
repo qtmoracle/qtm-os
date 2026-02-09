@@ -1,0 +1,41 @@
+{
+  "spec_version": "v0.01",
+  "command": "archive.gc",
+  "ok": true,
+  "result": {
+    "policy": {
+      "path": "archive/RETENTION_POLICY_v0.01.json",
+      "digest": {
+        "alg": "sha256",
+        "digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      }
+    },
+    "deleted": [
+      {
+        "digest": {
+          "alg": "sha256",
+          "digest": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+        },
+        "class": "execution_logs"
+      }
+    ],
+    "retained": [
+      {
+        "digest": {
+          "alg": "sha256",
+          "digest": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+        },
+        "class": "claims_full",
+        "reason": "pinned"
+      },
+      {
+        "digest": {
+          "alg": "sha256",
+          "digest": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd"
+        },
+        "class": "witness_results",
+        "reason": "permanent"
+      }
+    ]
+  }
+}
