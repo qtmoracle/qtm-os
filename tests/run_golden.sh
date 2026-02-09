@@ -24,3 +24,6 @@ if [ "$rc" -ne 2 ]; then
 fi
 echo "PASS: unknown command exits with code 2"
 
+diff -u tests/golden/qtm_runtime_v0.01.txt <(./bin/qtm runtime)
+echo "PASS: qtm runtime matches golden"
+
