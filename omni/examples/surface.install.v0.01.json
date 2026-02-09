@@ -1,3 +1,45 @@
 {
-  "note": "PLACEHOLDER — replace with a byte-stable canonical witness payload that conforms to WITNESS_FORMAT_v0.01 + CJSON_PROFILE_v0.01"
+  "schema": "omni.intent_envelope.v0.01",
+  "envelope_id": "REPLACE_AFTER_CANONICAL_HASH",
+  "created_utc": "2026-02-08T18:00:00Z",
+  "operator": {
+    "display_name": "Operator Example",
+    "key_id": "operator-key-01"
+  },
+  "intent": {
+    "summary": "Install Splash surface v0.01",
+    "statements": [
+      {
+        "id": "s1",
+        "type": "declare",
+        "text": "I am the authorized operator for this system."
+      },
+      {
+        "id": "s2",
+        "type": "request",
+        "text": "Install the Splash surface version v0.01."
+      },
+      {
+        "id": "s3",
+        "type": "ack",
+        "text": "This declaration records intent only and does not execute installation."
+      }
+    ]
+  },
+  "targets": [
+    {
+      "surface_id": "splash",
+      "ref": "surface:splash@v0.01"
+    }
+  ],
+  "constraints": {
+    "no_inferred_approval": true,
+    "no_execution": true,
+    "no_silent_networking": true
+  },
+  "attachments": [],
+  "hashes": {
+    "canonical_sha256": "REPLACE_AFTER_CANONICAL_HASH"
+  },
+  "signatures": []
 }
