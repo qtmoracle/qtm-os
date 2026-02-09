@@ -5,7 +5,7 @@ set -euo pipefail
 # QTM Macro (FROZEN): prints on every invocation
 # ----------------------------
 cat <<'BANNER'
-QQQQQQQQQQQ      TTTTTTTTTTTTTTTTTT     MMMM           MMMM
+QQQQQQQQQQQQQ    TTTTTTTTTTTTTTTTTT     MMMM           MMMM
 QQ         QQ            TTT            MMMMMM        MMMMM
 QQ         QQ            TTT            MM  MMMM    MMMM MM
 QQ         QQ            TTT            MM    MMMM MMMM  MM
