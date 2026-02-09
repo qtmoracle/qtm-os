@@ -13,6 +13,12 @@ echo "PASS: qtm --spec matches golden"
 diff -u tests/golden/qtm_inspect_v0.01.txt <(./bin/qtm inspect)
 echo "PASS: qtm inspect matches golden"
 
+diff -u tests/golden/qtm_runtime_v0.01.txt <(./bin/qtm runtime)
+echo "PASS: qtm runtime matches golden"
+
+diff -u tests/golden/qtm_surface_v0.01.txt <(./bin/qtm surface)
+echo "PASS: qtm surface matches golden"
+
 # Unknown command must exit with code 2 (deterministic)
 set +e
 ./bin/qtm __unknown__ >/dev/null 2>&1
@@ -24,19 +30,18 @@ if [ "$rc" -ne 2 ]; then
 fi
 echo "PASS: unknown command exits with code 2"
 
-diff -u tests/golden/qtm_runtime_v0.01.txt <(./bin/qtm runtime)
-echo "PASS: qtm runtime matches golden"
+echo "== qtm probe (json) =="
+./bin/qtm --json probe > /tmp/qtm_probe.json
+diff -u tests/golden/qtm_probe_v0.01.json /tmp/qtm_probe.json
+echo "PASS: qtm probe (json) matches golden"
 
-diff -u tests/golden/qtm_surface_v0.01.txt <(./bin/qtm surface)
-echo "PASS: qtm surface matches golden"
+./tests/validate_schema.py contracts/CLI_OUTPUT_SCHEMA_v0.01.json /tmp/qtm_probe.json
+echo "PASS: qtm probe conforms to CLI_OUTPUT_SCHEMA_v0.01"
 
 # Normalized --version output (mask Build Reference)
 diff -u tests/golden/qtm_version_v0.01.normalized.txt \
   <(./bin/qtm --version | sed -E 's/^Build Reference: git:[0-9a-f]+$/Build Reference: git:<REDACTED>/')
 echo "PASS: qtm --version matches normalized golden"
 
-echo "== qtm probe (json) =="
-./bin/qtm --json probe > /tmp/qtm_probe.json
-diff -u tests/golden/qtm_probe_v0.01.json /tmp/qtm_probe.json
-echo "PASS: qtm probe (json) matches golden"
 echo "ALL GOLDEN TESTS PASSED"
+
