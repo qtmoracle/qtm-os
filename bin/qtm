@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+# ----------------------------
+# QTM Macro (FROZEN): prints on every invocation
+# ----------------------------
 cat <<'BANNER'
 QQQQQQQQQQQ      TTTTTTTTTTTTTTTTTT     MMMM           MMMM
 QQ         QQ            TTT            MMMMMM        MMMMM
@@ -13,6 +16,47 @@ QQ      QQQQ             TTT            MM               MM
  QQQQQQQQQ QQ            TTT            MM               MM
             QQQ
 BANNER
+# ----------------------------
+# Deterministic outputs (no env/time/network)
+# ----------------------------
+
+print_help() {
+  cat <<'EOF'
+QTM CLI v0.01 (QTM OS)
+
+Usage:
+  qtm [--help|--version|--spec] <command> [args]
+
+Global Flags:
+  --help        Print help and exit
+  --version     Print runtime version header and exit
+  --spec        Print CLI spec references and exit
+
+Commands (reserved namespaces):
+  help          Print help and exit
+  version       Print runtime version header and exit
+  inspect       Read-only inspection (no validation, no mutation)
+  runtime       Reserved namespace (no mutation at v0.01)
+  surface       Reserved namespace (no surface load/start at v0.01)
+
+Notes:
+  - No authority is inferred.
+  - No background services are started.
+  - No Planck/OMNI/surface dependency.
+EOF
+}
+
+print_spec_refs() {
+  cat <<'EOF'
+CLI Specs (repo paths):
+  - docs/cli/QTM_CLI_SKELETON_v0.01.md
+  - docs/cli/QTM_RUNTIME_VERSION_HEADER_v0.01.md
+  - docs/cli/QTM_OS_DEPLOYMENT_DRILL_CHECKLIST_v0.01.md
+  - docs/cli/QTM_SURFACE_KILL_TEST_v0.01.md
+  - docs/cli/CLI_TO_RUNTIME_MAPPING_v0.01.md
+  - docs/cli/QTM_CLI_FREEZE_MANIFEST_v0.01.md
+EOF
+}
 
 print_runtime_header() {
   cat <<'EOF'
@@ -31,12 +75,61 @@ Declaration: Non-authoritative, declarative runtime header
 EOF
 }
 
-case "${1:-}" in
+# ----------------------------
+# Minimal dispatcher (v0.01): no-op routing only
+# ----------------------------
+cmd="${1:-}"
+
+case "$cmd" in
+  ""|--help|help)
+    print_help
+    exit 0
+    ;;
+
+  --spec)
+    print_spec_refs
+    exit 0
+    ;;
+
   --version|version)
     print_runtime_header
     exit 0
     ;;
-esac
 
-# QTM runtime handoff placeholder (until the real qtm-cli is wired in)
-echo "qtm: runtime not yet wired (macro OK)."
+  inspect)
+    # Read-only. No validation. No mutation.
+    cat <<'EOF'
+qtm inspect (v0.01)
+- Mode: read-only
+- Notes: no validation, no mutation, no surfaces, no Planck, no OMNI
+EOF
+    exit 0
+    ;;
+
+  runtime)
+    # Reserved namespace: no mutation at v0.01
+    cat <<'EOF'
+qtm runtime (v0.01)
+- Reserved namespace
+- No mutation permitted at v0.01
+EOF
+    exit 0
+    ;;
+
+  surface)
+    # Reserved namespace: MUST NOT load/start surfaces at v0.01
+    cat <<'EOF'
+qtm surface (v0.01)
+- Reserved namespace
+- No surface load/start at v0.01
+EOF
+    exit 0
+    ;;
+
+  *)
+    # Deterministic usage error
+    echo "qtm: unknown command: $cmd" >&2
+    echo "qtm: run 'qtm --help' for usage" >&2
+    exit 2
+    ;;
+esac
