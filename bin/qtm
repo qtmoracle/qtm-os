@@ -150,11 +150,12 @@ SURFACE_EOF
     if [[ "${2:-}" == "--json" ]]; then JSON_ONLY=1; fi
     # QTM PROBE (v0.01a): dry-run baseline
     # MUST: deterministic output, no env/time/network, no execution
-    cat <<'PROBE_JSON'
+cat <<'PROBE_JSON'
 {
+  "spec_version": "v0.01",
   "command": "probe",
-  "status": "ok",
-  "data": {
+  "ok": true,
+  "result": {
     "probe": {
       "summary": {
         "omni": "stub",
