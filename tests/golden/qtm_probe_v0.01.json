@@ -5,7 +5,8 @@
   "result": {
     "probe": {
       "summary": {
-        "omni": "stub",
+        "omni_present": true,
+        "omni_status": "available",
         "planck": "stub",
         "surface_exec": "blocked"
       },
