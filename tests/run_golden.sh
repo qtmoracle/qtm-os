@@ -29,3 +29,9 @@ echo "PASS: qtm runtime matches golden"
 
 diff -u tests/golden/qtm_surface_v0.01.txt <(./bin/qtm surface)
 echo "PASS: qtm surface matches golden"
+
+# Normalized --version output (mask Build Reference)
+diff -u tests/golden/qtm_version_v0.01.normalized.txt \
+  <(./bin/qtm --version | sed -E 's/^Build Reference: git:[0-9a-f]+$/Build Reference: git:<REDACTED>/')
+echo "PASS: qtm --version matches normalized golden"
+

@@ -1,0 +1,22 @@
+QQQQQQQQQQQQQ    TTTTTTTTTTTTTTTTTT     MMMM           MMMM
+QQ         QQ            TTT            MMMMMM        MMMMM
+QQ         QQ            TTT            MM  MMMM    MMMM MM
+QQ         QQ            TTT            MM    MMMM MMMM  MM
+QQ         QQ            TTT            MM      MMMM     MM
+QQ   QQQ   QQ            TTT            MM               MM
+QQ     Q   QQ            TTT            MM               MM
+QQ      QQQQ             TTT            MM               MM
+ QQQQQQQQQ QQ            TTT            MM               MM
+            QQQ
+QTM Runtime v0.01
+Layer: QTM OS
+Frozen Components:
+  - QTM_MACRO_v0.01
+  - QTM_CLI_SKELETON_v0.01
+  - QTM_OS_DEPLOYMENT_DRILL_CHECKLIST_v0.01
+  - QTM_SURFACE_KILL_TEST_v0.01
+  - CLI_TO_RUNTIME_MAPPING_v0.01
+  - QTM_CLI_FREEZE_MANIFEST_v0.01
+  - QTM_RUNTIME_VERSION_HEADER_v0.01
+Build Reference: git:@QTM_BUILD_REF@
+Declaration: Non-authoritative, declarative runtime header
