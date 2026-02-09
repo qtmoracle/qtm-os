@@ -1,0 +1,31 @@
+QQQQQQQQQQQQQ    TTTTTTTTTTTTTTTTTT     MMMM           MMMM
+QQ         QQ            TTT            MMMMMM        MMMMM
+QQ         QQ            TTT            MM  MMMM    MMMM MM
+QQ         QQ            TTT            MM    MMMM MMMM  MM
+QQ         QQ            TTT            MM      MMMM     MM
+QQ   QQQ   QQ            TTT            MM               MM
+QQ     Q   QQ            TTT            MM               MM
+QQ      QQQQ             TTT            MM               MM
+ QQQQQQQQQ QQ            TTT            MM               MM
+            QQQ
+QTM CLI v0.01 (QTM OS)
+
+Usage:
+  qtm [--help|--version|--spec] <command> [args]
+
+Global Flags:
+  --help        Print help and exit
+  --version     Print runtime version header and exit
+  --spec        Print CLI spec references and exit
+
+Commands (reserved namespaces):
+  help          Print help and exit
+  version       Print runtime version header and exit
+  inspect       Read-only inspection (no validation, no mutation)
+  runtime       Reserved namespace (no mutation at v0.01)
+  surface       Reserved namespace (no surface load/start at v0.01)
+
+Notes:
+  - No authority is inferred.
+  - No background services are started.
+  - No Planck/OMNI/surface dependency.
