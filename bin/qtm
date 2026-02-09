@@ -26,7 +26,7 @@ Frozen Components:
   - CLI_TO_RUNTIME_MAPPING_v0.01
   - QTM_CLI_FREEZE_MANIFEST_v0.01
   - QTM_RUNTIME_VERSION_HEADER_v0.01
-Build Reference: git:2a58167
+Build Reference: git:@QTM_BUILD_REF@
 Declaration: Non-authoritative, declarative runtime header
 EOF
 }
