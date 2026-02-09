@@ -17,6 +17,8 @@ Global Flags:
   --help        Print help and exit
   --version     Print runtime version header and exit
   --spec        Print CLI spec references and exit
+  --json        Emit JSON only (suppresses macro/banner)
+
 
 Commands (reserved namespaces):
   help          Print help and exit
@@ -24,6 +26,7 @@ Commands (reserved namespaces):
   inspect       Read-only inspection (no validation, no mutation)
   runtime       Reserved namespace (no mutation at v0.01)
   surface       Reserved namespace (no surface load/start at v0.01)
+  probe         Dry-run OS baseline test (no network, no execution)
 
 Notes:
   - No authority is inferred.

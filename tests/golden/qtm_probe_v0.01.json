@@ -1,0 +1,21 @@
+{
+  "command": "probe",
+  "status": "ok",
+  "data": {
+    "probe": {
+      "summary": {
+        "omni": "stub",
+        "planck": "stub",
+        "surface_exec": "blocked"
+      },
+      "invariants": [
+        "no_network",
+        "no_execution",
+        "deterministic_output"
+      ],
+      "notes": [
+        "dry_run_only"
+      ]
+    }
+  }
+}
