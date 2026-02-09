@@ -35,3 +35,8 @@ diff -u tests/golden/qtm_version_v0.01.normalized.txt \
   <(./bin/qtm --version | sed -E 's/^Build Reference: git:[0-9a-f]+$/Build Reference: git:<REDACTED>/')
 echo "PASS: qtm --version matches normalized golden"
 
+echo "== qtm probe (json) =="
+./bin/qtm --json probe > /tmp/qtm_probe.json
+diff -u tests/golden/qtm_probe_v0.01.json /tmp/qtm_probe.json
+echo "PASS: qtm probe (json) matches golden"
+echo "ALL GOLDEN TESTS PASSED"
