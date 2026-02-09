@@ -6,3 +6,6 @@ set -euo pipefail
 
 diff -u tests/golden/qtm_help_v0.01.txt <(./bin/qtm --help)
 echo "PASS: qtm --help matches golden"
+
+diff -u tests/golden/qtm_spec_v0.01.txt <(./bin/qtm --spec)
+echo "PASS: qtm --spec matches golden"

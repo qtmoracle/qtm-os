@@ -1,0 +1,17 @@
+QQQQQQQQQQQQQ    TTTTTTTTTTTTTTTTTT     MMMM           MMMM
+QQ         QQ            TTT            MMMMMM        MMMMM
+QQ         QQ            TTT            MM  MMMM    MMMM MM
+QQ         QQ            TTT            MM    MMMM MMMM  MM
+QQ         QQ            TTT            MM      MMMM     MM
+QQ   QQQ   QQ            TTT            MM               MM
+QQ     Q   QQ            TTT            MM               MM
+QQ      QQQQ             TTT            MM               MM
+ QQQQQQQQQ QQ            TTT            MM               MM
+            QQQ
+CLI Specs (repo paths):
+  - docs/cli/QTM_CLI_SKELETON_v0.01.md
+  - docs/cli/QTM_RUNTIME_VERSION_HEADER_v0.01.md
+  - docs/cli/QTM_OS_DEPLOYMENT_DRILL_CHECKLIST_v0.01.md
+  - docs/cli/QTM_SURFACE_KILL_TEST_v0.01.md
+  - docs/cli/CLI_TO_RUNTIME_MAPPING_v0.01.md
+  - docs/cli/QTM_CLI_FREEZE_MANIFEST_v0.01.md
