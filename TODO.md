@@ -90,6 +90,12 @@ G. POST-VM ACTIONS (RECORDED, NOT YET EXECUTED)
       - tests/VM_VALIDATION_REPORT_v0.01.md
       - tests/VM_TEST_CHECKLIST_DELTA_v0.02.md
 - [x] VM test checklist relocated to tests/ for test-artifact consistency
+- [ ] HOT: Separate PLANCK (surface manager) from SPLASH (surface)
+      before declaring full MVP for QTM OS / OMNI / PLANCK / SPLASH
+      - PLANCK remains routing + discovery only
+      - SPLASH moves out of planck/ into a surface/ namespace
+      - Draft SPLASH artifacts migrate last, after freeze decision
+      - No behavior or semantics change during separation
 
 
 ────────────────────────────────────────
