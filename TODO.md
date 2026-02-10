@@ -1,5 +1,5 @@
 # QTM_OS TODO (v0.01 — POST-SURFACE.LIST v0.01a)
-Status: ACTIVE — post-baseline, pre-surface
+Status: ACTIVE — post-baseline, pre-VM-validation
 
 This TODO reflects the system state **after**:
 - deterministic CLI exists
@@ -7,6 +7,7 @@ This TODO reflects the system state **after**:
 - OMNI + PLANCK presence detection is live
 - JSON output is schema-validated
 - golden tests enforce behavior
+- surface discovery via Planck is frozen (v0.01a)
 
 No items below should regress those guarantees.
 
@@ -17,6 +18,9 @@ A. HYGIENE (OPTIONAL BUT RECOMMENDED)
       - commit vs ignore
       - document decision in README or ADR
       - enforce via `.gitignore` if ignored
+- [x] Archive superseded placement guidance
+      - `FILE_PLACEMENT_CHECKLIST_v0.01.md` archived
+      - `FILE_PLACEMENT_CHECKLIST_v0.02.md` is current descriptive truth
 - [ ] Reconcile duplicate freeze manifests:
       - document precedence between v0.01 and v0.01a
       - do NOT modify frozen content
@@ -33,11 +37,11 @@ B. TEST & CONTRACT HARDENING
       - or explicitly document probe as the only validated entrypoint at v0.01
 
 ────────────────────────────────────────
-C. PLANCK SURFACE DISCOVERY (NEXT)
+C. PLANCK SURFACE DISCOVERY (FROZEN)
 ────────────────────────────────────────
 - [x] Define `surface.list` contract (v0.01a, schema-enforced) (read-only, deterministic)
-- [x] Implement `qtm surface list` (Planck-only, read-only) (human text output)
-- [x] Implement `qtm --json surface list` (CLI_OUTPUT_SCHEMA_v0.01a) (schema-aligned)
+- [x] Implement `qtm surface list` (Planck-only, read-only)
+- [x] Implement `qtm --json surface list` (CLI_OUTPUT_SCHEMA_v0.01a)
 - [x] Discover surfaces via Planck filesystem inspection only:
       - `<SURFACE>_SPEC_v*.md`
       - `<SURFACE>_FREEZE_MANIFEST_v*.md`
@@ -46,14 +50,31 @@ C. PLANCK SURFACE DISCOVERY (NEXT)
 - [x] Define surface invocation contract (v0.01a, declarative, non-executing)
 
 ────────────────────────────────────────
-D. SURFACES (UNLOCKED — surface.list frozen)
+D. SURFACES (DRAFT PHASE — NON-AUTHORITATIVE)
 ────────────────────────────────────────
-- [ ] SPLASH draft consistency pass (behavior map → schema → examples) (DRAFT only)
-- [ ] SPLASH surface behavior (after surface.list is frozen)
-- [ ] Any other domain surfaces
+- [x] SPLASH draft consistency pass:
+      - behavior map aligned
+      - event schema aligned
+      - examples normalized
+      - role boundary clarified
+      - build checklist aligned
+- [ ] SPLASH VM behavior validation (read-only, no fixes)
+- [ ] Any additional domain surfaces (must follow SPLASH draft pattern)
 
 ────────────────────────────────────────
-E. UI (EXPLICITLY DEFERRED)
+E. VM VALIDATION (NEXT)
+────────────────────────────────────────
+- [x] VM test checklist created (`VM_TEST_CHECKLIST_v0.01.md`)
+- [ ] Run VM tests against:
+      - QTM OS
+      - OMNI
+      - PLANCK
+      - SPLASH (surface behavior only)
+- [ ] Record failures as observations only
+- [ ] Do NOT patch, edit drafts, or bump versions during testing
+
+────────────────────────────────────────
+F. UI (EXPLICITLY DEFERRED)
 ────────────────────────────────────────
 - [ ] Any UI (CLI TUI / web / graphical) is forbidden until:
       - surface.list is frozen
@@ -61,7 +82,18 @@ E. UI (EXPLICITLY DEFERRED)
       - execution boundaries are documented
 
 ────────────────────────────────────────
-F. GOVERNANCE / ADRs (AS NEEDED)
+G. POST-VM ACTIONS (RECORDED, NOT YET EXECUTED)
+────────────────────────────────────────
+- [ ] HOT: Add explicit VM assertions for storage / artifact lifecycle
+      (retention, bounded growth, no hidden accumulation)
+- [x] VM validation artifacts generated:
+      - tests/VM_VALIDATION_REPORT_v0.01.md
+      - tests/VM_TEST_CHECKLIST_DELTA_v0.02.md
+- [x] VM test checklist relocated to tests/ for test-artifact consistency
+
+
+────────────────────────────────────────
+H. GOVERNANCE / ADRs (AS NEEDED)
 ────────────────────────────────────────
 - [ ] ADR: release artifact policy
 - [ ] ADR: surface discovery rules
