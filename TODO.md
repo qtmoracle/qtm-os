@@ -48,6 +48,7 @@ C. PLANCK SURFACE DISCOVERY (NEXT)
 ────────────────────────────────────────
 D. SURFACES (UNLOCKED — surface.list frozen)
 ────────────────────────────────────────
+- [ ] SPLASH draft consistency pass (behavior map → schema → examples) (DRAFT only)
 - [ ] SPLASH surface behavior (after surface.list is frozen)
 - [ ] Any other domain surfaces
 
