@@ -43,6 +43,7 @@ C. PLANCK SURFACE DISCOVERY (NEXT)
       - `<SURFACE>_FREEZE_MANIFEST_v*.md`
 - [x] Add golden tests for surface listing (text + json)
 - [x] Ensure no execution, no OMNI calls, no surface start/load
+- [x] Define surface invocation contract (v0.01a, declarative, non-executing)
 
 ────────────────────────────────────────
 D. SURFACES (UNLOCKED — surface.list frozen)
