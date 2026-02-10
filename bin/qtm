@@ -150,6 +150,7 @@ SURFACE_EOF
     if [[ "${2:-}" == "--json" ]]; then JSON_ONLY=1; fi
     # QTM PROBE (v0.01a): dry-run baseline
     # MUST: deterministic output, no env/time/network, no execution
+
     OMNI_PRESENT=false
     if [[ -d "omni" && -f "omni/OMNI_INTERFACE_SPEC_v0.01.md" ]]; then
       OMNI_PRESENT=true
@@ -158,7 +159,17 @@ SURFACE_EOF
     if [[ "$OMNI_PRESENT" == "true" ]]; then
       OMNI_STATUS="available"
     fi
-cat <<PROBE_JSON
+
+    PLANCK_PRESENT=false
+    if [[ -d "planck" && -f "planck/PLANCK_SURFACE_MANAGER_SPEC_v0.01.md" ]]; then
+      PLANCK_PRESENT=true
+    fi
+    PLANCK_STATUS="missing"
+    if [[ "$PLANCK_PRESENT" == "true" ]]; then
+      PLANCK_STATUS="available"
+    fi
+
+    cat <<PROBE_JSON
 {
   "spec_version": "v0.01",
   "command": "probe",
@@ -168,7 +179,8 @@ cat <<PROBE_JSON
       "summary": {
         "omni_present": ${OMNI_PRESENT},
         "omni_status": "${OMNI_STATUS}",
-        "planck": "stub",
+        "planck_present": ${PLANCK_PRESENT},
+        "planck_status": "${PLANCK_STATUS}",
         "surface_exec": "blocked"
       },
       "invariants": [
