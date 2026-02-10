@@ -1,0 +1,589 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "qtm://schemas/CLI_OUTPUT_SCHEMA_v0.01a.json",
+  "title": "QTM CLI Output Schema v0.01a",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "spec_version",
+    "command",
+    "ok",
+    "result"
+  ],
+  "properties": {
+    "spec_version": {
+      "type": "string",
+      "const": "v0.01a",
+      "description": "Schema/version lock for deterministic CLI outputs."
+    },
+    "qtm_version": {
+      "type": "string",
+      "description": "CLI build/version string. Informational only; MUST NOT affect verification."
+    },
+    "command": {
+      "type": "string",
+      "description": "Normalized command identifier, e.g. 'hash', 'sign', 'verify', 'freeze.verify', 'witness.verify-claim'."
+    },
+    "ok": {
+      "type": "boolean",
+      "description": "True if command succeeded according to v0.01 semantics."
+    },
+    "result": {
+      "type": "object",
+      "description": "Deterministic result payload. Use per-command shapes via oneOf constraints below.",
+      "additionalProperties": true
+    },
+    "errors": {
+      "type": "array",
+      "description": "Machine-readable errors when ok=false (and optionally ok=true for warnings).",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "code",
+          "message"
+        ],
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "details": {
+            "type": [
+              "object",
+              "array",
+              "string",
+              "number",
+              "boolean",
+              "null"
+            ]
+          }
+        }
+      },
+      "default": []
+    },
+    "non_deterministic_metadata": {
+      "type": "object",
+      "description": "Optional metadata that MUST NOT be used for hashing/verification decisions.",
+      "additionalProperties": true
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "command": {
+            "const": "hash"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "result": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "targets"
+            ],
+            "properties": {
+              "targets": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "path",
+                    "digest"
+                  ],
+                  "properties": {
+                    "path": {
+                      "type": "string"
+                    },
+                    "digest": {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "required": [
+                        "alg",
+                        "digest"
+                      ],
+                      "properties": {
+                        "alg": {
+                          "type": "string",
+                          "const": "sha256"
+                        },
+                        "digest": {
+                          "type": "string",
+                          "pattern": "^[0-9a-f]{64}$"
+                        }
+                      }
+                    },
+                    "kind": {
+                      "type": "string",
+                      "enum": [
+                        "file",
+                        "dir",
+                        "bytes"
+                      ]
+                    },
+                    "tree_digest": {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "required": [
+                        "alg",
+                        "digest"
+                      ],
+                      "properties": {
+                        "alg": {
+                          "type": "string",
+                          "const": "sha256"
+                        },
+                        "digest": {
+                          "type": "string",
+                          "pattern": "^[0-9a-f]{64}$"
+                        }
+                      },
+                      "description": "Optional digest for a canonical directory tree manifest, if supported."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "command": {
+            "const": "sign"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "result": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "subject",
+              "signature"
+            ],
+            "properties": {
+              "subject": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "digest"
+                ],
+                "properties": {
+                  "path": {
+                    "type": "string"
+                  },
+                  "digest": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "alg",
+                      "digest"
+                    ],
+                    "properties": {
+                      "alg": {
+                        "type": "string",
+                        "const": "sha256"
+                      },
+                      "digest": {
+                        "type": "string",
+                        "pattern": "^[0-9a-f]{64}$"
+                      }
+                    }
+                  }
+                }
+              },
+              "signature": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "alg",
+                  "sig",
+                  "key_id"
+                ],
+                "properties": {
+                  "alg": {
+                    "type": "string",
+                    "description": "Signature algorithm identifier (e.g., ed25519)."
+                  },
+                  "sig": {
+                    "type": "string",
+                    "description": "Base64 or hex signature; encoding must be documented elsewhere and stable."
+                  },
+                  "key_id": {
+                    "type": "string",
+                    "description": "Stable key identifier (fingerprint)."
+                  },
+                  "public_key": {
+                    "type": "string",
+                    "description": "Optional public key material or locator."
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "command": {
+            "const": "verify"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "result": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "subject",
+              "verified"
+            ],
+            "properties": {
+              "subject": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "digest"
+                ],
+                "properties": {
+                  "path": {
+                    "type": "string"
+                  },
+                  "digest": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "alg",
+                      "digest"
+                    ],
+                    "properties": {
+                      "alg": {
+                        "type": "string",
+                        "const": "sha256"
+                      },
+                      "digest": {
+                        "type": "string",
+                        "pattern": "^[0-9a-f]{64}$"
+                      }
+                    }
+                  }
+                }
+              },
+              "verified": {
+                "type": "boolean"
+              },
+              "signer": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "key_id": {
+                    "type": "string"
+                  },
+                  "alg": {
+                    "type": "string"
+                  }
+                }
+              },
+              "reason_codes": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "default": []
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "command": {
+            "const": "freeze.verify"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "result": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "target",
+              "compliant"
+            ],
+            "properties": {
+              "target": {
+                "type": "string"
+              },
+              "compliant": {
+                "type": "boolean"
+              },
+              "freeze_manifest": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "digest"
+                ],
+                "properties": {
+                  "path": {
+                    "type": "string"
+                  },
+                  "digest": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "alg",
+                      "digest"
+                    ],
+                    "properties": {
+                      "alg": {
+                        "type": "string",
+                        "const": "sha256"
+                      },
+                      "digest": {
+                        "type": "string",
+                        "pattern": "^[0-9a-f]{64}$"
+                      }
+                    }
+                  }
+                }
+              },
+              "violations": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "path",
+                    "code",
+                    "message"
+                  ],
+                  "properties": {
+                    "path": {
+                      "type": "string"
+                    },
+                    "code": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "expected": {
+                      "type": [
+                        "string",
+                        "object",
+                        "array",
+                        "null"
+                      ]
+                    },
+                    "actual": {
+                      "type": [
+                        "string",
+                        "object",
+                        "array",
+                        "null"
+                      ]
+                    }
+                  }
+                },
+                "default": []
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "command": {
+            "const": "witness.verify-claim"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "result": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "claim",
+              "verified",
+              "evidence"
+            ],
+            "properties": {
+              "claim": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "digest"
+                ],
+                "properties": {
+                  "path": {
+                    "type": "string"
+                  },
+                  "digest": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "alg",
+                      "digest"
+                    ],
+                    "properties": {
+                      "alg": {
+                        "type": "string",
+                        "const": "sha256"
+                      },
+                      "digest": {
+                        "type": "string",
+                        "pattern": "^[0-9a-f]{64}$"
+                      }
+                    }
+                  }
+                }
+              },
+              "verified": {
+                "type": "boolean"
+              },
+              "reason_codes": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "default": []
+              },
+              "policy": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "path": {
+                    "type": "string"
+                  },
+                  "digest": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "alg",
+                      "digest"
+                    ],
+                    "properties": {
+                      "alg": {
+                        "type": "string",
+                        "const": "sha256"
+                      },
+                      "digest": {
+                        "type": "string",
+                        "pattern": "^[0-9a-f]{64}$"
+                      }
+                    }
+                  }
+                }
+              },
+              "evidence": {
+                "type": "array",
+                "description": "Digests of all inputs examined by witness during verification.",
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "label",
+                    "digest"
+                  ],
+                  "properties": {
+                    "label": {
+                      "type": "string"
+                    },
+                    "path": {
+                      "type": "string"
+                    },
+                    "digest": {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "required": [
+                        "alg",
+                        "digest"
+                      ],
+                      "properties": {
+                        "alg": {
+                          "type": "string",
+                          "const": "sha256"
+                        },
+                        "digest": {
+                          "type": "string",
+                          "pattern": "^[0-9a-f]{64}$"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }    ,
+    {
+      "if": {
+        "properties": {
+          "command": {
+            "const": "surface.list"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "result": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "surfaces"
+            ],
+            "properties": {
+              "surfaces": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "name",
+                    "present",
+                    "frozen"
+                  ],
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "pattern": "^[a-z0-9_-]+$"
+                    },
+                    "present": {
+                      "type": "boolean"
+                    },
+                    "frozen": {
+                      "type": "boolean",
+                      "const": true
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+
+  ]
+}

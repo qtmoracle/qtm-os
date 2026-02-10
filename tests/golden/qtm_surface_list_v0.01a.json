@@ -1,0 +1,10 @@
+{
+  "spec_version": "v0.01a",
+  "command": "surface.list",
+  "ok": true,
+  "result": {
+    "surfaces": [
+      { "name": "splash", "present": true, "frozen": true }
+    ]
+  }
+}

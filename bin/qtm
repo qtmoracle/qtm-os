@@ -137,13 +137,110 @@ RUNTIME_CMD_EOF
     ;;
 
   surface)
-    # Reserved namespace: MUST NOT load/start surfaces at v0.01
-    cat <<'SURFACE_EOF'
-qtm surface (v0.01)
-- Reserved namespace
-- No surface load/start at v0.01
-SURFACE_EOF
-    exit 0
+    # PLANCK Surface discovery (v0.01a): read-only, deterministic, filesystem-only
+    sub="${2:-}"
+
+    case "$sub" in
+      ""|--help|help)
+        cat <<'SURFACE_HELP_EOF'
+qtm surface (v0.01a)
+Subcommands:
+  list        List available surfaces (read-only, Planck filesystem inspection only)
+
+Notes:
+  - No surface load/start
+  - No OMNI calls
+  - No network
+  - Deterministic output
+SURFACE_HELP_EOF
+        exit 0
+        ;;
+
+      list)
+        # Allow `qtm surface list --json` as well (in addition to global --json)
+        if [[ "${3:-}" == "--json" ]]; then JSON_ONLY=1; fi
+
+        # Surface presence rule: a surface is present iff both exist:
+        #   planck/<NAME>_SPEC_v*.md
+        #   planck/<NAME>_FREEZE_MANIFEST_v*.md
+        #
+        # Output:
+        #  - human: stable text list
+        #  - json: schema-enforced by contracts/CLI_OUTPUT_SCHEMA_v0.01a.json
+
+        declare -A has_spec
+        declare -A has_manifest
+        declare -A names
+
+        shopt -s nullglob
+        for f in planck/*_SPEC_v*.md; do
+          base="$(basename "$f")"
+          name="${base%%_SPEC_v*}"
+          name_lc="$(printf "%s" "$name" | tr '[:upper:]' '[:lower:]')"
+          has_spec["$name_lc"]=1
+          names["$name_lc"]=1
+        done
+
+        for f in planck/*_FREEZE_MANIFEST_v*.md; do
+          base="$(basename "$f")"
+          name="${base%%_FREEZE_MANIFEST_v*}"
+          name_lc="$(printf "%s" "$name" | tr '[:upper:]' '[:lower:]')"
+          has_manifest["$name_lc"]=1
+          names["$name_lc"]=1
+        done
+        shopt -u nullglob
+
+        # Collect present surfaces only (spec + manifest)
+        present=()
+        for n in "${!names[@]}"; do
+          if [[ "${has_spec[$n]:-0}" -eq 1 && "${has_manifest[$n]:-0}" -eq 1 ]]; then
+            present+=("$n")
+          fi
+        done
+
+        # Deterministic sort
+        IFS=$'\n' present_sorted=($(printf "%s\n" "${present[@]}" | LC_ALL=C sort))
+        unset IFS
+
+        if [[ "$JSON_ONLY" -eq 1 ]]; then
+          # JSON (v0.01a)
+          printf '{\n'
+          printf '  "spec_version": "v0.01a",\n'
+          printf '  "command": "surface.list",\n'
+          printf '  "ok": true,\n'
+          printf '  "result": {\n'
+          printf '    "surfaces": [\n'
+
+          first=1
+          for n in "${present_sorted[@]}"; do
+            if [[ -z "$n" ]]; then continue; fi
+            if [[ "$first" -eq 0 ]]; then printf ',\n'; fi
+            first=0
+            printf '      { "name": "%s", "present": true, "frozen": true }' "$n"
+          done
+
+          printf '\n'
+          printf '    ]\n'
+          printf '  }\n'
+          printf '}\n'
+        else
+          # Human text (v0.01a)
+          echo "SURFACES (v0.01a)"
+          for n in "${present_sorted[@]}"; do
+            if [[ -z "$n" ]]; then continue; fi
+            echo "- $n   [present, frozen]"
+          done
+        fi
+
+        exit 0
+        ;;
+
+      *)
+        echo "qtm surface: unknown subcommand: $sub" >&2
+        echo "qtm surface: run 'qtm surface help' for usage" >&2
+        exit 2
+        ;;
+    esac
     ;;
 
   probe)
@@ -205,5 +302,3 @@ PROBE_JSON
     exit 2
     ;;
 esac
-EOF
-chmod +x bin/qtm

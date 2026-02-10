@@ -16,8 +16,20 @@ echo "PASS: qtm inspect matches golden"
 diff -u tests/golden/qtm_runtime_v0.01.txt <(./bin/qtm runtime)
 echo "PASS: qtm runtime matches golden"
 
-diff -u tests/golden/qtm_surface_v0.01.txt <(./bin/qtm surface)
+diff -u tests/golden/qtm_surface_v0.01a.txt <(./bin/qtm surface)
 echo "PASS: qtm surface matches golden"
+
+# qtm surface list (v0.01a)
+diff -u tests/golden/qtm_surface_list_v0.01a.txt <(./bin/qtm surface list)
+echo "PASS: qtm surface list matches golden (text)"
+
+./bin/qtm --json surface list > /tmp/qtm_surface_list.json
+diff -u tests/golden/qtm_surface_list_v0.01a.json /tmp/qtm_surface_list.json
+echo "PASS: qtm surface list matches golden (json)"
+
+./tests/validate_schema.py contracts/CLI_OUTPUT_SCHEMA_v0.01a.json /tmp/qtm_surface_list.json
+echo "PASS: qtm surface list conforms to CLI_OUTPUT_SCHEMA_v0.01a"
+
 
 # Unknown command must exit with code 2 (deterministic)
 set +e
